@@ -1,5 +1,5 @@
 # KyuuCraft-Site
-Repo for Website for KyuuCraft Website. Designed using [Node.js](https://nodejs.org/en/) for packages, [Vite](https://vite.dev/) with [React](https://react.dev/) for the site design, and [ShadeCN](https://ui.shadcn.com/) for UI elements. See [below](##)
+Repo for Website for KyuuCraft Website. Designed using [Node.js](https://nodejs.org/en/) for packages, [Vite](https://vite.dev/) with [React](https://react.dev/) for the site design, and [ShadeCN](https://ui.shadcn.com/) for UI elements. See [below](#current-site-versions) for specific version these softwares.
 
 ## Running in Test
 - Clone the repository from the [Github page](https://github.com/Spide6667/KyuuCraft-Site)
@@ -8,8 +8,6 @@ Repo for Website for KyuuCraft Website. Designed using [Node.js](https://nodejs.
 - Install all packages (ie `npm install`)
 - run `npm run dev` or `[npx,yarn,pnpm,bunx] vite` or `deno run -A npm:vite`
 - Should run in [localhost:5173/](http://localhost:5173/)
-
-## Adding a Webpage
 
 ## Current Site versions
 - **Vite**: 8.0.14
