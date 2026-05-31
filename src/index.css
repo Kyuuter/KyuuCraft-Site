@@ -1,0 +1,212 @@
+@import "./style.css";
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/*----------------------------------- Element styling -----------------------------------*/
+h1 {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  font-size: 60px;
+  font-weight: bold;
+  padding: 0.5rem 4rem 0.5rem 4rem;
+}
+
+h2 {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  font-size: 35px;
+  font-style: italic;
+  padding: 0.5rem 2rem 0.5rem 2rem;
+}
+
+h3 {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  font-size: 25px;
+  text-decoration: underline;
+  padding: 0.5rem 2rem 0.5rem 2rem;
+}
+
+p {
+  display: inline-block;
+  width: 100%;
+  text-align: left;
+  text-indent: 1rem;
+  font-size: 20px;
+  padding-bottom: 1rem;
+}
+
+a {
+  text-decoration: underline;
+  font-weight: 600;
+  @apply text-link-regular;
+}
+a:hover {
+  font-weight: 500;
+  @apply text-link-hover;
+}
+
+/*------------------------- Special formatting for unordered list -----------------------*/
+ul {
+  display: initial;
+  text-align: left;
+  font-size: 20px;
+  width: 100%;
+}
+
+ul p {
+  text-indent: 0rem;
+}
+
+ul li {
+  text-align: inherit;
+  font-size: 20px;
+  padding-left: 20px;
+  list-style-type: disc;
+  text-decoration: inherit;
+}
+
+ul li li {
+  list-style: circle;
+  font-size: 18px;
+}
+
+ul li li li {
+  list-style: square;
+  font-weight: lighter;
+}
+
+/*---------------------------------- Component Styling ----------------------------------*/
+.project-card-image {
+  width: inherit;
+  height: inherit;
+  border-width: 5px;
+}
+
+.project-card-text {
+  display: inline-block;
+  text-align: center;
+  font-size: 16px;
+  text-overflow: ellipsis;
+}
+
+.project-card-text:hover {
+  text-overflow: unset;
+}
+
+/*------------------------------ Unique Properties styling ------------------------------*/
+.page-content-holder {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+
+.main-content-holder {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0.5rem 15% 0.5rem 15%;
+  align-items: center;
+}
+
+.main-content-text {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  font-size: 20px;
+  padding-bottom: 1rem;
+}
+
+.main-content-image-sq {
+  display: block;
+  margin: auto;
+  width: 250px;
+  aspect-ratio: 1 / 1;
+}
+
+.secondary-text {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+  padding: 0.25rem;
+}
+
+.secondary-image-circle {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.secondary-content-image-sq {
+  display: block;
+  width: 100px;
+  aspect-ratio: 1 / 1;
+}
+
+.object-container-vert {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 20% 1rem 20% 1rem;
+}
+
+.object-container-horizon {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  width: 100%;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 1rem 0 1rem 0;
+}
+
+.object-container-grid {
+  display: grid;
+  flex-grow: 1;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  justify-content: center;
+  gap: 2rem;
+  padding: 20px 100px;
+}
+
+.grid-cell {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+.hidden-grid-content {
+  overflow: auto;
+  height: 150px;
+}
+
+@media (max-width: 1200px) {
+  .object-container-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 800px) {
+  .object-container-grid {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    padding: 20px 25px;
+  }
+  .main-content-holder {
+    padding: 0 25px;
+  }
+}
