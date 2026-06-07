@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Home} from "lucide-react";
 import { ModeToggle } from "@/components/mode-toggle";
-import "@/components/NavBar.css";
+import "@/components/Navbar.css";
 
 function Navbar() {
   return (
