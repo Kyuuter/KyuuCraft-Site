@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Home from "@/pages/Home";
 import TestThemes from "@/pages/TestThemes";
 import CmdPage from "@/pages/CmdPage";
+import GetStarted from "@/pages/GetStarted";
 import Navbar from "@/components/Navbar";
 import NotFound from "@/utils/NotFound";
 import MdPageGen from "@/utils/MdPageGen";
@@ -50,6 +51,7 @@ export function App() {
               <div className="bg-background main-container">
               <Routes>
                 <Route path="/" Component={Home} />
+                <Route path="/get-started" Component={GetStarted} />
                 <Route path="/test/test-themes" Component={TestThemes} />
                 <Route path="/cmds" Component={CmdPage} />
                 <Route path="*" Component={NotFound} />

@@ -50,7 +50,7 @@ const ProjectDetails: React.FC = () => {
   switch (state.status) {
     case Status["Loaded"]:
       return (
-        <div className="pl-10 pr-10">
+        <div className="page-content-holder">
           <ReactMarkdown>
               {state.content}
             </ReactMarkdown>

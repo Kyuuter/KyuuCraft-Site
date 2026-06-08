@@ -1,3 +1,4 @@
 {
-    "test": "pages/test.md"
+    "test": "pages/test.md",
+    "rules": "pages/rules.md"
 }

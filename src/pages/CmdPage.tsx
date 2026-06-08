@@ -37,7 +37,7 @@ const ProjectList = () => {
       {loading ? (
         <LoadingCmdPage />
       ) : (
-        <div className="pl-5 pr-5">
+        <div>
           {(data && data.data && data.data.size > 0) ?
           <ul>
             {
@@ -60,7 +60,7 @@ const ProjectList = () => {
                             <div className="flex flex-col">
                               <br />
                               <h3>Options</h3>
-                              <ul key={element.name}>
+                              <ul className="pl-2" key={element.name}>
                                 {
                                   element.options.map((optionArr) => (
                                     <li key={optionArr[0]} className="text-xs/5 font-bold"> {optionArr[0]} 
@@ -75,7 +75,7 @@ const ProjectList = () => {
                             <div className="flex">
                               <br />
                               <h3>Shorthand</h3>
-                              <ul key={element.name}>
+                              <ul className="pl-2" key={element.name}>
                                 {element.aka.map((value:string, index:number) => (
                                   <div key={index}>{value}</div>
                                 ))}

@@ -14,10 +14,10 @@ function Navbar() {
           <menu className="navbar-site-list divide-x-2">
             <li className="nav-item">
               <Link
-                to="/LINK-LATER"
+                to="/get-started"
                 className="nav-links"
               >
-                Test Left
+                Getting Started
               </Link>
             </li>
           </menu>
@@ -26,10 +26,10 @@ function Navbar() {
           <menu className="navbar-site-list divide-x-2">
             <li className="nav-item">
               <Link
-                to="/LINK-LATER"
+                to="/cmds"
                 className="nav-links"
-                >
-                Test Right
+              >
+                Server Commands
               </Link>
             </li>
           </menu>
