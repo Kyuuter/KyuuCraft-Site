@@ -4,10 +4,11 @@ import Home from "@/pages/Home";
 import TestThemes from "@/pages/TestThemes";
 import CmdPage from "@/pages/CmdPage";
 import GetStarted from "@/pages/GetStarted";
+import PricingPage from "@/pages/PricingPage";
 import Navbar from "@/components/Navbar";
 import NotFound from "@/utils/NotFound";
 import MdPageGen from "@/utils/MdPageGen";
-import { getMarkdownPage } from "./utils/CustomFunctions";
+import { getMarkdownPage } from "@/utils/CustomFunctions";
 import "@/App.css";
 
 export function App() {
@@ -54,6 +55,7 @@ export function App() {
                 <Route path="/get-started" Component={GetStarted} />
                 <Route path="/test/test-themes" Component={TestThemes} />
                 <Route path="/cmds" Component={CmdPage} />
+                <Route path="/pricing/:pageOption" Component={PricingPage}/>
                 <Route path="*" Component={NotFound} />
                 {list}
               </Routes>
