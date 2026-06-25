@@ -19,6 +19,10 @@
                 ["<player>","Who are you giving the money to?"]
             ]
         },
+        "/tpr": {
+            "desc": "Teleport to a random place in the server."
+        }
+        ,
         "/tpaccept": {
             "desc": "Allow a player to teleport to you."
         },
@@ -37,7 +41,8 @@
             "desc": "Sell all items in a group defined by the option chosen (does not work for unsellable items, see sell items page for full list).",
             "options": [
                 ["hand","sells all of that item type from your inventory"],
-                ["inventory","sells ALL sellable items from your inventory"]
+                ["inventory","sells ALL sellable items from your inventory"],
+                ["[ITEM ID]", "sell all of that item in your inventory"]
             ]
         },
         "/sellgui": {
@@ -82,7 +87,8 @@
             "desc": "Manage your properties and territories",
             "options": [
                 ["claim", "Create a town in the current chunk"],
-                ["claim outpost", "Create an outpost in the current chunk"]
+                ["claim outpost", "Create an outpost in the current chunk"],
+                ["deposit [AMOUNT]", "Add money to the current town's balance"]
             ],
             "AKA": ["/t","/tm"]
         }

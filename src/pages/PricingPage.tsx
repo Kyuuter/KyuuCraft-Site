@@ -1,14 +1,24 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import YAML from 'yaml';
 import DefaultPageSkeleton from "@/utils/loading-objs/DefaultPageSkeleton";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 
 interface item {
     name:string;
     buy: number;
     sell: number;
+    spawnertype?: string;
 }
 
 /* page options 
@@ -33,6 +43,10 @@ interface item {
 
 const itemSections = ["Blocks.yml","Decoration.yml","Dyes.yml","Enchanting.yml","Farming.yml","Food.yml","Mobs.yml","Music.yml",
     "Ores.yml","Potions.yml","Redstone.yml","SpawnEggs.yml","Spawners.yml","Workstations.yml","Z_EverythingElse.yml","Miscellaneous.yml"];
+
+const itemExtension = new Map<string,string>([["Blocks","blocks"],["Decoration","decor"],["Dyes","dyes"],["Enchanted Books","enchanted"],["Farm Items","farm"],["Food","food"],
+    ["Mob Drops","mobs"],["Music Discs","music"],["Ores","ores"],["Potions","potion"],["Redstone Items","redstone"],["Mob Eggs","eggs"],["Mob Spawners","spawners"],
+    ["WorkStations","workstation"],["Misc Items","misc"],["All Items","all"]]);
 
 async function handleLoad(option: string): Promise<item[]> {
     var result: item[] = [];
@@ -101,7 +115,7 @@ async function pullData(filepath:string): Promise<item[] | null> {
                 {
                     const temp = items[item];
                     const values = {
-                        name: temp.material,
+                        name: temp.spawnertype ? temp.spawnertype + " " +  temp.material : temp.material,
                         buy: temp.buy,
                         sell: temp.sell
                     };
@@ -119,30 +133,56 @@ async function pullData(filepath:string): Promise<item[] | null> {
 
 function PricingPage() {
     const { pageOption } = useParams();
+    const [currOption, setCurrOption] = useState<string>("ERROR");
     const [loading, setLoading] = useState<boolean>(true);
     const [filter, setFilter] = useState<string>("");
     const [data, setData] = useState<item[]>();
     const [showing, setShowing] = useState<item[]>();
+    const [optionDiv, setOptionDiv] = useState(<div/>);
+    const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+
+    const fetchData = async () => {
+        var loadData:item[] = [];
+        try {
+            loadData = await handleLoad(currOption);
+        } catch (error) {
+            console.error(error, data, showing);
+        }
+        finally{
+            setData(loadData);
+            setShowing(loadData);
+            setLoading(false);
+            setOptionDiv(<div className="grid grid-cols-5 place-items-center pt-5">
+                    {
+                    Array.from([...itemExtension.entries()].filter(([name, value]) => value != pageOption)).map((temp) => (
+                            <Link className="flex pb-5" to={"/pricing/" + temp[1]} onClick={() => setCurrOption(temp[1])}>
+                                <p>{temp[0]}</p>
+                            </Link>
+                    ))
+                    }
+                </div>
+            );
+            setIsMenuOpen(false);
+        }
+    }
 
     useEffect(() => {
-        const fetchData = async () => {
-            var loadData:item[] = [];
+        const setScene = async () => {
             try {
                 if (pageOption)
-                    loadData = await handleLoad(pageOption);
-                else
-                    loadData = await handleLoad("all");
+                    setCurrOption(pageOption);
+                else setCurrOption("all");
             } catch (error) {
                 console.error(error, data, showing);
             }
-            finally{
-                setData(loadData);
-                setShowing(loadData);
-                setLoading(false);
-            }
         }
+        setScene();
         fetchData();
     }, []);
+
+    useEffect(() => {        
+            fetchData();
+        }, [currOption]);
 
     useEffect(() => {
         if(filter.length == 0){
@@ -158,37 +198,45 @@ function PricingPage() {
             const temp = value.name.toLowerCase();
             return temp.includes(filter.toLowerCase());
         }))
-    }, [filter])
+    }, [filter]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFilter(e.target.value);
     }
 
-    return (<div>
+    return (<div className="w-4/5">
         {loading ? <DefaultPageSkeleton/> : <div>
                 {(!showing || !data) ? <h2>Data did not load properly!</h2> : (
                     <>
+                    {isMenuOpen ? optionDiv : <div className="flex flex-row p-2">
                         <Input placeholder="Filter by name"
                             value={filter}
                             onChange={handleChange}/>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Buy Price</th>
-                                    <th>Sell Price</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {showing.map((item) => (
-                                    <tr key={item.name}>
-                                        <td>{item.name}</td>
-                                        <td>{item.buy}</td>
-                                        <td>{item.sell}</td>
-                                    </tr>
+                        <Button
+                            className="ml-2"
+                            onClick={()=>setIsMenuOpen(true)}>
+                                Change Category
+                        </Button>
+                        </div>
+                    }
+                        <Table>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead className="font-bold">Name</TableHead>
+                                    <TableHead className="font-bold">Buy Price</TableHead>
+                                    <TableHead className="font-bold">Sell Price</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {showing.map((item, count) => (
+                                    <TableRow key={item.name} className={count % 2 == 0 ? "bg-secondary" : ""}>
+                                        <TableCell>{item.name}</TableCell>
+                                        <TableCell>$ {item.buy}</TableCell>
+                                        <TableCell>$ {item.sell}</TableCell>
+                                    </TableRow>
                                 ))}
-                            </tbody>
-                        </table>
+                            </TableBody>
+                        </Table>
                     </>
                 )}
         </div>}
