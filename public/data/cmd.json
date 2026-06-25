@@ -7,12 +7,6 @@
                 ["EndPortal", "Go to the End Portal within the dungeon."]    
             ]
         },
-        "/spawn": {
-            "desc": "Teleport to the server spawn area (must stay still for 3 seconds to complete the travel)."
-        },
-        "/back": {
-            "desc": "Go back to the last point to teleported from"
-        },
         "/tpa": {
             "desc": "Teleport to a player (requires the player to accept, see `/tpaccept` cmd).",
             "options": [
@@ -28,6 +22,12 @@
         },
         "/tpadeny": {
             "desc": "Deny a player to teleport to you."
+        },
+        "/spawn": {
+            "desc": "Teleport to the server spawn area (must stay still for 3 seconds to complete the travel)."
+        },
+        "/back": {
+            "desc": "Go back to the last point to teleported from"
         }
     },
     "Money Commands": {
