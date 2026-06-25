@@ -14,7 +14,7 @@ function Home() {
         </span>
         <br/>
         <span className="text-xl">
-          This site is an ongoing project and is currently in the early stages of development. If you have any issues, please let <span className="font-bold">Spide667</span> know so he can
+          This site is an ongoing project and is currently in the early stages of development. If you have any issues, please let <span className="font-bold">Spide6667</span> know so he can
           get it fixed. <span className="italic font-bold">Thank you for stopping by!</span>
         </span>
       </div>
