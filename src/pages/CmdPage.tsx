@@ -45,13 +45,13 @@ const ProjectList = () => {
             {
               Array.from(data.data.entries()).map(([key, list]) => (
                 <div key = {key}>
-                <h2>{key}</h2>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+                <h3>{key}</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-5 gap-2">
                     {list.map((element) => (
-                      <Card key={element.name} className="flex flex-col content-start">
+                      <Card key={element.name} className="flex flex-col content-start gap-1">
                         <CardHeader>
                           <div>
-                            <CardTitle><h3>{element.name}</h3></CardTitle>
+                            <CardTitle><p className="cmd-header">{element.name}</p></CardTitle>
                           </div>
                         </CardHeader>
                         <CardContent className="flex flex-col content-start p-y-0">
@@ -59,9 +59,8 @@ const ProjectList = () => {
                             {element.desc}
                           </p>
                           {(element.options && element.options.length > 0) && (
-                            <div className="flex flex-col">
-                              <br />
-                              <p className="text-base">Options</p>
+                            <div className="flex flex-col pt-2">
+                              <p className="cmd-header">Options</p>
                               <ul className="pl-2" key={element.name}>
                                 {
                                   element.options.map((optionArr) => (
@@ -74,9 +73,8 @@ const ProjectList = () => {
                             </div>
                           )}
                           {(element.aka && element.aka.length > 0) && (
-                            <div className="flex">
-                              <br />
-                              <p className="text-base">Shorthands</p>
+                            <div className="flex flex-col pt-2">
+                              <p className="cmd-header">Shorthands</p>
                               <ul className="pl-2" key={element.name}>
                                 {element.aka.map((value:string, index:number) => (
                                   <div key={index}>{value}</div>
@@ -100,7 +98,7 @@ const ProjectList = () => {
   return (
     <div className="page-content-holder">
       {/*ClassName comes from index.css*/}
-      <h1>{title}</h1>
+      <h2>{title}</h2>
       <Separator />
       {list}
     </div>

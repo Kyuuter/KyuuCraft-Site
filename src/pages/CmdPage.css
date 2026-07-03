@@ -1,12 +1,20 @@
 .cmd-title {
-    font-size: 16px;
+    font-size: 12px;
     font-weight: 500;
     padding: 0;
 }
 
 .cmd-content {
-    font-size: 16px;
+    font-size: 12px;
     font-style: italic;
     font-weight: 200;
+    padding-bottom: 0;
+}
+
+.cmd-header {
+    font-size: 18px;
+    font-style: italic;
+    font-weight: 600;
+    text-decoration: underline;
     padding-bottom: 0;
 }
