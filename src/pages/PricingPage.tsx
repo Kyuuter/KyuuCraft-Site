@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import YAML from 'yaml';
 import DefaultPageSkeleton from "@/utils/loading-objs/DefaultPageSkeleton";
 import { Input } from "@/components/ui/input";
@@ -49,8 +49,8 @@ const itemExtension = new Map<string,string>([["Blocks","blocks"],["Decoration",
     ["WorkStations","workstation"],["Misc Items","misc"],["All Items","all"]]);
 
 async function handleLoad(option: string): Promise<item[]> {
-    var result: item[] = [];
-    var temp;
+    const result: item[] = [];
+    let temp;
     option = option.toLowerCase();
 
     if (option == "all") {
@@ -102,7 +102,7 @@ async function handleLoad(option: string): Promise<item[]> {
 
 async function pullData(filepath:string): Promise<item[] | null> {
     console.log("Pulling data for group: ", filepath);
-    var result: item[] | null = null;
+    let result: item[] | null = null;
     const data = await fetch(filepath);
 
     if (data) {
@@ -141,8 +141,8 @@ function PricingPage() {
     const [optionDiv, setOptionDiv] = useState(<div/>);
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
-    const fetchData = async () => {
-        var loadData:item[] = [];
+    const fetchData = useCallback(async () => {
+        let loadData:item[] = [];
         try {
             loadData = await handleLoad(currOption);
         } catch (error) {
@@ -154,7 +154,7 @@ function PricingPage() {
             setLoading(false);
             setOptionDiv(<div className="grid grid-cols-5 place-items-center pt-5">
                     {
-                    Array.from([...itemExtension.entries()].filter(([name, value]) => value != pageOption)).map((temp) => (
+                    Array.from([...itemExtension.entries()].filter(([, value]) => value != pageOption)).map((temp) => (
                             <Link className="flex pb-5" to={"/pricing/" + temp[1]} onClick={() => setCurrOption(temp[1])}>
                                 <p>{temp[0]}</p>
                             </Link>
@@ -164,7 +164,7 @@ function PricingPage() {
             );
             setIsMenuOpen(false);
         }
-    }
+    },[currOption, data, pageOption, showing]);
 
     useEffect(() => {
         const setScene = async () => {
@@ -174,31 +174,35 @@ function PricingPage() {
                 else setCurrOption("all");
             } catch (error) {
                 console.error(error, data, showing);
+                return;
             }
+            fetchData();
         }
         setScene();
-        fetchData();
-    }, []);
+    }, [data, pageOption, showing, fetchData]);
 
     useEffect(() => {        
             fetchData();
-        }, [currOption]);
+        }, [currOption, fetchData]);
 
     useEffect(() => {
-        if(filter.length == 0){
-            setShowing(data);
-            return;
-        }
+        const adjust = () => {
+            if(filter.length == 0){
+                setShowing(data);
+                return;
+            }
 
-        if (!data) {
-            console.error("Attempted to filter before data loaded!!!!")
-            return
+            if (!data) {
+                console.error("Attempted to filter before data loaded!!!!")
+                return
+            }
+            setShowing(data.filter((value) => {
+                const temp = value.name.toLowerCase();
+                return temp.includes(filter.toLowerCase());
+            }))
         }
-        setShowing(data.filter((value) => {
-            const temp = value.name.toLowerCase();
-            return temp.includes(filter.toLowerCase());
-        }))
-    }, [filter]);
+        adjust();
+    }, [filter, data]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFilter(e.target.value);
