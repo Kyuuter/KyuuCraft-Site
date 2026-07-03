@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import YAML from 'yaml';
 import DefaultPageSkeleton from "@/utils/loading-objs/DefaultPageSkeleton";
 import { Input } from "@/components/ui/input";
@@ -44,16 +44,18 @@ interface item {
 const itemSections = ["Blocks.yml","Decoration.yml","Dyes.yml","Enchanting.yml","Farming.yml","Food.yml","Mobs.yml","Music.yml",
     "Ores.yml","Potions.yml","Redstone.yml","SpawnEggs.yml","Spawners.yml","Workstations.yml","Z_EverythingElse.yml","Miscellaneous.yml"];
 
-const itemExtension = new Map<string,string>([["Blocks","blocks"],["Decoration","decor"],["Dyes","dyes"],["Enchanted Books","enchanted"],["Farm Items","farm"],["Food","food"],
-    ["Mob Drops","mobs"],["Music Discs","music"],["Ores","ores"],["Potions","potion"],["Redstone Items","redstone"],["Mob Eggs","eggs"],["Mob Spawners","spawners"],
+const itemExtension = new Map<string,string>([["Blocks","block"],["Decoration","decor"],["Dyes","dye"],["Enchanted Books","enchanted"],["Farm Items","farm"],["Food","food"],
+    ["Mob Drops","mob"],["Music Discs","music"],["Ores","ores"],["Potions","potion"],["Redstone Items","redstone"],["Mob Eggs","egg"],["Mob Spawners","spawners"],
     ["WorkStations","workstation"],["Misc Items","misc"],["All Items","all"]]);
 
 async function handleLoad(option: string): Promise<item[]> {
     const result: item[] = [];
     let temp;
     option = option.toLowerCase();
+    console.debug(`Hit load function\nOption is ${option}`);
 
     if (option == "all") {
+        console.debug("Hit load all request");
         for (const item in itemSections) {
             temp = await pullData("data/itemPrices/" + itemSections[item]);
             if (temp) {
@@ -114,8 +116,23 @@ async function pullData(filepath:string): Promise<item[] | null> {
                 for (const item in items)
                 {
                     const temp = items[item];
+                    let itemName = temp.material.replace("_", " ");
+
+                    if (temp.spawnertype) {
+                        itemName = temp.spawnertype.replace("_", " ") + " " +  itemName;
+                    }
+                    else if (temp.potiontypes && temp.potiontypes[0]){
+                        itemName = itemName + " " + temp.potiontypes[0].replace("_", " ").toUpperCase();
+                    }
+                    else if (temp.enchantments && temp.enchantments[0]) {
+                        itemName = itemName + " OF " + temp.enchantments[0].replace("_", " ").toUpperCase();
+                    }
+                    else if (temp.instrument) {
+                        itemName = itemName + " OF " + temp.instrument.toUpperCase();
+                    }
+
                     const values = {
-                        name: temp.spawnertype ? temp.spawnertype + " " +  temp.material : temp.material,
+                        name: itemName,
                         buy: temp.buy,
                         sell: temp.sell
                     };
@@ -133,24 +150,28 @@ async function pullData(filepath:string): Promise<item[] | null> {
 
 function PricingPage() {
     const { pageOption } = useParams();
-    const [currOption, setCurrOption] = useState<string>("ERROR");
-    const [loading, setLoading] = useState<boolean>(true);
+    const [currOption, setCurrOption] = useState<string>(pageOption ? pageOption.toString() : "all");
+    const [loading, setLoading] = useState<boolean>(false);
     const [filter, setFilter] = useState<string>("");
     const [data, setData] = useState<item[]>();
-    const [showing, setShowing] = useState<item[]>();
     const [optionDiv, setOptionDiv] = useState(<div/>);
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+    const showing = useMemo(() => {
+        return data?.filter((value) => {
+                const temp = value.name.toLowerCase();
+                return temp.includes(filter.toLowerCase());
+            });
+    }, [data, filter]);
 
     const fetchData = useCallback(async () => {
         let loadData:item[] = [];
         try {
             loadData = await handleLoad(currOption);
         } catch (error) {
-            console.error(error, data, showing);
+            console.error(error);
         }
         finally{
             setData(loadData);
-            setShowing(loadData);
             setLoading(false);
             setOptionDiv(<div className="grid grid-cols-5 place-items-center pt-5">
                     {
@@ -163,46 +184,19 @@ function PricingPage() {
                 </div>
             );
             setIsMenuOpen(false);
+            setLoading(false);
         }
-    },[currOption, data, pageOption, showing]);
+    },[currOption, pageOption]);
 
+    // For loading data
     useEffect(() => {
-        const setScene = async () => {
-            try {
-                if (pageOption)
-                    setCurrOption(pageOption);
-                else setCurrOption("all");
-            } catch (error) {
-                console.error(error, data, showing);
-                return;
-            }
-            fetchData();
+        const load = async () => {
+            setLoading(true);
+            console.debug("Loading pricing data.");
+            await fetchData();
         }
-        setScene();
-    }, [data, pageOption, showing, fetchData]);
-
-    useEffect(() => {        
-            fetchData();
-        }, [currOption, fetchData]);
-
-    useEffect(() => {
-        const adjust = () => {
-            if(filter.length == 0){
-                setShowing(data);
-                return;
-            }
-
-            if (!data) {
-                console.error("Attempted to filter before data loaded!!!!")
-                return
-            }
-            setShowing(data.filter((value) => {
-                const temp = value.name.toLowerCase();
-                return temp.includes(filter.toLowerCase());
-            }))
-        }
-        adjust();
-    }, [filter, data]);
+        load();
+    }, [fetchData])
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFilter(e.target.value);
