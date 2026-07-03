@@ -44,8 +44,8 @@ interface item {
 const itemSections = ["Blocks.yml","Decoration.yml","Dyes.yml","Enchanting.yml","Farming.yml","Food.yml","Mobs.yml","Music.yml",
     "Ores.yml","Potions.yml","Redstone.yml","SpawnEggs.yml","Spawners.yml","Workstations.yml","Z_EverythingElse.yml","Miscellaneous.yml"];
 
-const itemExtension = new Map<string,string>([["Blocks","block"],["Decoration","decor"],["Dyes","dye"],["Enchanted Books","enchanted"],["Farm Items","farm"],["Food","food"],
-    ["Mob Drops","mob"],["Music Discs","music"],["Ores","ores"],["Potions","potion"],["Redstone Items","redstone"],["Mob Eggs","egg"],["Mob Spawners","spawners"],
+const itemExtension = new Map<string,string>([["Blocks","blocks"],["Decoration","decor"],["Dyes","dyes"],["Enchanted Books","enchant"],["Farm Items","farm"],["Food","food"],
+    ["Mob Drops","mobs"],["Music Items","music"],["Ores","ores"],["Potions","potion"],["Redstone Items","redstone"],["Mob Eggs","eggs"],["Mob Spawners","spawners"],
     ["WorkStations","workstation"],["Misc Items","misc"],["All Items","all"]]);
 
 async function handleLoad(option: string): Promise<item[]> {
@@ -116,16 +116,16 @@ async function pullData(filepath:string): Promise<item[] | null> {
                 for (const item in items)
                 {
                     const temp = items[item];
-                    let itemName = temp.material.replace("_", " ");
+                    let itemName = temp.material.replaceAll("_", " ");
 
                     if (temp.spawnertype) {
-                        itemName = temp.spawnertype.replace("_", " ") + " " +  itemName;
+                        itemName = temp.spawnertype.replaceAll("_", " ") + " " +  itemName;
                     }
                     else if (temp.potiontypes && temp.potiontypes[0]){
-                        itemName = itemName + " " + temp.potiontypes[0].replace("_", " ").toUpperCase();
+                        itemName = itemName + " OF " + temp.potiontypes[0].replaceAll("_", " ").toUpperCase();
                     }
                     else if (temp.enchantments && temp.enchantments[0]) {
-                        itemName = itemName + " OF " + temp.enchantments[0].replace("_", " ").toUpperCase();
+                        itemName = itemName + " OF " + temp.enchantments[0].replaceAll("_", " ").toUpperCase().split(":")[0];
                     }
                     else if (temp.instrument) {
                         itemName = itemName + " OF " + temp.instrument.toUpperCase();
