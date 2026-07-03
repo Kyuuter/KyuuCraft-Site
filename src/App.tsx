@@ -55,6 +55,7 @@ export function App() {
                 <Route path="/get-started" Component={GetStarted} />
                 <Route path="/test/test-themes" Component={TestThemes} />
                 <Route path="/cmds" Component={CmdPage} />
+                <Route path="/pricing" Component={PricingPage}/>
                 <Route path="/pricing/:pageOption" Component={PricingPage}/>
                 <Route path="*" Component={NotFound} />
                 {list}

@@ -16,19 +16,19 @@ function Home() {
         <br/>
         <h2>Suggested Pages</h2>
         <div className="grid grid-cols-2 gap-2">
-          <Link to="pricing/all" className="suggested-page-link">
+          <Link to="pricing/all/" className="suggested-page-link">
             <h3 className="font-bold">Item Prices</h3>
             <span className="suggested-page-body">View the server's prices for selling and buying items</span>
           </Link>
-          <Link to="get-started" className="suggested-page-link">
+          <Link to="get-started/" className="suggested-page-link">
             <h3 className="font-bold">Getting Started</h3>
             <span className="suggested-page-body">See onboarding info for getting started with the server</span>
           </Link>
-          <Link to="rules" className="suggested-page-link">
+          <Link to="rules/" className="suggested-page-link">
             <h3 className="font-bold">Server Rules</h3>
             <span className="suggested-page-body">View general server rules and etiquette</span>
           </Link>
-          <Link to="cmds" className="suggested-page-link">
+          <Link to="cmds/" className="suggested-page-link">
             <h3 className="font-bold">Server Commands</h3>
             <span className="suggested-page-body">Get a list of all custom commands you can use on the server</span>
           </Link>
