@@ -11,6 +11,8 @@ import {
   type CmdList,
   getCmdList,
 } from "@/utils/parse-cmds";
+import "./CmdPage.css";
+
 
 const ProjectList = () => {
   const [data, setData] = useState<CmdList>();
@@ -43,28 +45,28 @@ const ProjectList = () => {
             {
               Array.from(data.data.entries()).map(([key, list]) => (
                 <div key = {key}>
-                <h1>{key}</h1>
+                <h2>{key}</h2>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
                     {list.map((element) => (
                       <Card key={element.name} className="flex flex-col content-start">
                         <CardHeader>
                           <div>
-                            <CardTitle><h2>{element.name}</h2></CardTitle>
+                            <CardTitle><h3>{element.name}</h3></CardTitle>
                           </div>
                         </CardHeader>
-                        <CardContent className="flex flex-col content-start">
-                          <p className="text-xs italic">
+                        <CardContent className="flex flex-col content-start p-y-0">
+                          <p className="cmd-content">
                             {element.desc}
                           </p>
                           {(element.options && element.options.length > 0) && (
                             <div className="flex flex-col">
                               <br />
-                              <h3>Options</h3>
+                              <p className="text-base">Options</p>
                               <ul className="pl-2" key={element.name}>
                                 {
                                   element.options.map((optionArr) => (
-                                    <li key={optionArr[0]} className="text-xs/5 font-bold"> {optionArr[0]} 
-                                      <p className="italic font-normal">{optionArr[1]}</p>
+                                    <li key={optionArr[0]} className="cmd-title"> {optionArr[0]} 
+                                      <p className="cmd-content">{optionArr[1]}</p>
                                     </li>
                                   ))
                                 }
@@ -74,7 +76,7 @@ const ProjectList = () => {
                           {(element.aka && element.aka.length > 0) && (
                             <div className="flex">
                               <br />
-                              <h3>Shorthand</h3>
+                              <p className="text-base">Shorthands</p>
                               <ul className="pl-2" key={element.name}>
                                 {element.aka.map((value:string, index:number) => (
                                   <div key={index}>{value}</div>
