@@ -14,7 +14,7 @@ import {
 import "./CmdPage.css";
 
 
-const ProjectList = () => {
+const CmdPage = () => {
   const [data, setData] = useState<CmdList>();
   const [loading, setLoading] = useState(true);
 
@@ -31,9 +31,15 @@ const ProjectList = () => {
     };
 
     fetchData();
+    const top = document.getElementById("page-top");
+    if (top) {                
+      setTimeout(() => {
+        top.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
   }, []);
-  const title = loading ? "Loading..." : "Server Commands";
 
+  const title = loading ? "Loading..." : "Server Commands";
   const list = (
     <>
       {loading ? (
@@ -104,4 +110,4 @@ const ProjectList = () => {
     </div>
   );
 };
-export default ProjectList;
+export default CmdPage;

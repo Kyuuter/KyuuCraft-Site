@@ -10,14 +10,14 @@ function GetStarted() {
         <div className="pl-10 pr-10">
             <h2>Prerequisites</h2>
             <ul>
-                <li>You must be a subscriber on my Twitch channel! Being a sub automatically grants you the special role that gives you access to the server!</li>
-                <li>
-                    Make sure you link your Discord account to your Twitch account! This is how you'll get the sub role and access to the server!
-                    <li className="italic font-bold">If your sub runs out, you'll be automatically removed from the server's whitelist so make sure you have an active sub on Twitch!</li>
-                </li>
+                <li>You must be a subscriber to Kyuu's Twitch channel! Being a sub allows you to whitelist yourself for the server!</li>
+                <li>Make sure you link your Discord account to your Twitch account! This is how you'll get the sub role and access to the server!</li>
                 <li>
                     Have a valid installation of Minecraft (Java only), version 1.21.11
-                    <li className="italic">If you want to use Proxy chat (We use <a href="https://modrinth.com/plugin/plasmo-voice">Plasmo</a> for this), you should use a Launcher that allows for mods</li>
+                    <li className="italic">
+                        If you want to use Proxy chat (We use <a href="https://modrinth.com/plugin/plasmo-voice">Plasmo</a> for this), you should use a Launcher that allows for mods
+                    </li>
+                    <Link className = "text-accent pl-10" to="/features#mods">More info for Proxy Chat here</Link>
                 </li>
             </ul>
             <h2>Getting Access to the Server</h2>

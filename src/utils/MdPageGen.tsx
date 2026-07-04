@@ -8,7 +8,7 @@ import NotFound from "@/utils/NotFound";
 import DefaultPageSkeleton from "@/utils/loading-objs/DefaultPageSkeleton";
 import { getMarkdownPage } from "./CustomFunctions";
 
-const ProjectDetails: React.FC = () => {
+const MdPageDetails: React.FC = () => {
   const [state, setState] = useState<State>({status:Status.Loading});
 
   useEffect(() => {
@@ -66,4 +66,4 @@ const ProjectDetails: React.FC = () => {
   }
 };
 
-export default ProjectDetails;
+export default MdPageDetails;
