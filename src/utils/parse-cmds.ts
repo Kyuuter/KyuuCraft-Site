@@ -22,7 +22,7 @@ export async function getCmdList(): Promise<CmdList> {
   //await new Promise((resolve) => setTimeout(resolve, 1000 * 1000));
 
   const json = await response.json();
-  console.debug("CMD JSON:", json);
+  //console.debug("CMD JSON:", json);
 
   const categories: string[] = [];
   const data: Map<string, CmdObj[]> = new Map<string, CmdObj[]>();
@@ -41,11 +41,11 @@ export async function getCmdList(): Promise<CmdList> {
 };
 
 function handleJsonObj(value: object): CmdObj[] {
-  console.log("Print", value);
+  //console.debug("Print", value);
   const array:CmdObj[] = [];
 
   for (const [cmd, obj] of Object.entries(value)) {
-    console.log(cmd, " = ", obj);
+    //console.debug(cmd, " = ", obj);
     let temp = {"name": cmd, "desc": ""}
     for (const [piece,val] of Object.entries(obj)) {
       temp = {...temp, [piece]:val};

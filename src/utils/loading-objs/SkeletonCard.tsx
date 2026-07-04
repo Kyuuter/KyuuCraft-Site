@@ -9,7 +9,7 @@ import "@/utils/loading-objs/skeleton.css";
 
 export default function SkeletonCard() {
   return (
-    <Card className="project-cell">
+    <Card>
       <CardHeader>
         <Skeleton className="h-10 fake-header" />
       </CardHeader>

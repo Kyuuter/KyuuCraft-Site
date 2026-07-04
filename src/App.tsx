@@ -5,6 +5,7 @@ import TestThemes from "@/pages/TestThemes";
 import CmdPage from "@/pages/CmdPage";
 import GetStarted from "@/pages/GetStarted";
 import PricingPage from "@/pages/PricingPage";
+import Features from "@/pages/Features";
 import Navbar from "@/components/Navbar";
 import NotFound from "@/utils/NotFound";
 import MdPageGen from "@/utils/MdPageGen";
@@ -45,7 +46,7 @@ export function App() {
   );
 
   return (
-    <div className="shell-container">
+    <div className="shell-container" id='page-top'>
         <Router>
           <Navbar/>
           <div className="bg-gradient-to-r from-secondary via-background to-secondary main-holder">
@@ -57,6 +58,7 @@ export function App() {
                 <Route path="/cmds" Component={CmdPage} />
                 <Route path="/pricing" Component={PricingPage}/>
                 <Route path="/pricing/:pageOption" Component={PricingPage}/>
+                <Route path="/features" Component={Features}/>
                 <Route path="*" Component={NotFound} />
                 {list}
               </Routes>

@@ -15,4 +15,12 @@
     background: var(--secondary);
     text-decoration: none;
     text-align: center;
+    border-radius: 10px;
+    padding: 2px;
+}
+
+.suggested-page-link:hover {
+    color: var(--accent);
+    border: 2px solid var(--accent);
+    padding: 0;
 }
